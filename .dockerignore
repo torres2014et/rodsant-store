@@ -1,0 +1,38 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Dependencias que se reinstalan dentro de la imagen
+/node_modules
+/vendor
+
+# Assets generados (se compilan en la etapa de build)
+/public/build
+/public/hot
+
+# Symlink de storage (se recrea con storage:link)
+/public/storage
+
+# Entorno y secretos (van en variables de Railway)
+.env
+.env.*
+!.env.example
+
+# Caches, logs y temporales (se conserva la estructura de carpetas de storage)
+/storage/logs/*.log
+/storage/*.key
+/storage/pail
+.phpunit.result.cache
+/.phpunit.cache
+
+# Editores / SO
+.DS_Store
+Thumbs.db
+/.idea
+/.vscode
+/.fleet
+
+# No necesarios en producción
+/tests
+*.md

@@ -1,0 +1,193 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/*
+|--------------------------------------------------------------------------
+| RodSant Store — Sistema visual (luxury streetwear, monocromático)
+|--------------------------------------------------------------------------
+| Paleta B&N + fuentes editoriales. Tailwind v4 expone cada token como
+| utilidad: --color-noir -> bg-noir/text-noir, --font-display -> font-display.
+*/
+@theme {
+    /* Tipografía de marca — sportswear premium (grotesca moderna) */
+    --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+
+    /* Paleta monocromática de lujo */
+    --color-noir: #0a0a0a;
+    --color-ink: #1a1a1a;
+    --color-ash: #8a8a8a;
+    --color-mist: #e4e1dd;
+    --color-bone: #f6f4f1;
+    --color-platinum: #c8c2b6;
+
+    /* Easing y duración base para microinteracciones sutiles */
+    --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+| Ajustes base
+*/
+@layer base {
+    /* Evita el parpadeo de elementos controlados por Alpine antes de inicializar */
+    [x-cloak] {
+        display: none !important;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        @apply bg-bone text-noir font-sans antialiased;
+    }
+
+    /* Tipografía editorial para títulos */
+    h1,
+    h2,
+    h3 {
+        @apply font-serif;
+    }
+
+    /* Selección con acento de marca */
+    ::selection {
+        @apply bg-noir text-bone;
+    }
+
+    /* Scrollbar discreta (WebKit) */
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        @apply bg-bone;
+    }
+    ::-webkit-scrollbar-thumb {
+        @apply bg-mist;
+        border: 3px solid var(--color-bone);
+        border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-ash;
+    }
+}
+
+/*
+| Utilidades / componentes de marca
+*/
+@layer components {
+    /* Contenedor editorial con respiración generosa */
+    .container-editorial {
+        @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12;
+    }
+
+    /* Eyebrow / kicker tipográfico */
+    .eyebrow {
+        @apply font-sans text-[0.7rem] font-medium uppercase tracking-[0.32em] text-ash;
+    }
+
+    /* Subrayado animado para enlaces de navegación */
+    .nav-link {
+        @apply relative font-sans text-[0.78rem] font-medium uppercase tracking-[0.18em] text-noir/80 transition-colors duration-300 hover:text-noir;
+    }
+    .nav-link::after {
+        content: '';
+        @apply absolute -bottom-1.5 left-0 h-px w-0 bg-noir transition-all duration-500;
+        transition-timing-function: var(--ease-luxury);
+    }
+    .nav-link:hover::after {
+        @apply w-full;
+    }
+
+    /* Botón primario sólido */
+    .btn-noir {
+        @apply inline-flex items-center justify-center gap-2 bg-noir px-8 py-4 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-bone transition-all duration-500 hover:bg-ink;
+        transition-timing-function: var(--ease-luxury);
+    }
+
+    /* Botón outline */
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 border border-noir px-8 py-4 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-noir transition-all duration-500 hover:bg-noir hover:text-bone;
+        transition-timing-function: var(--ease-luxury);
+    }
+
+    /* Botón claro sobre fondo oscuro */
+    .btn-bone {
+        @apply inline-flex items-center justify-center gap-2 bg-bone px-8 py-4 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-noir transition-all duration-500 hover:bg-mist;
+        transition-timing-function: var(--ease-luxury);
+    }
+}
+
+/*
+| Animaciones de entrada (reveal on scroll vía Alpine x-intersect)
+*/
+@layer utilities {
+    .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+            opacity 0.9s var(--ease-luxury),
+            transform 0.9s var(--ease-luxury);
+    }
+    .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Marquee infinito para announcement bar / tickers */
+    @keyframes marquee {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+    }
+    .animate-marquee {
+        animation: marquee 28s linear infinite;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Logo de marca como marca de agua: máscara radial que funde el fondo
+       (elimina el recuadro) y deja solo el monograma con un glow suave. */
+    .logo-watermark {
+        opacity: 0.3;
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 36%, transparent 64%);
+        mask-image: radial-gradient(circle at 50% 50%, #000 36%, transparent 64%);
+    }
+
+    /* Centra en ambos ejes (left-1/2 / top-1/2) y flota suavemente */
+    @keyframes logo-float {
+        0%,
+        100% {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+            transform: translate(-50%, calc(-50% - 16px)) scale(1.04);
+        }
+    }
+    .animate-logo {
+        animation: logo-float 9s var(--ease-luxury) infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .animate-logo {
+            animation: none;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
