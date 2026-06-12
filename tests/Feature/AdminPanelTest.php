@@ -6,8 +6,10 @@ namespace Tests\Feature;
 
 use App\Enums\OrderStatus;
 use App\Enums\UserRole;
+use App\Filament\Resources\Categories\Pages\CreateCategory;
 use App\Filament\Resources\Inventory\Pages\EditInventory;
 use App\Filament\Resources\Orders\Pages\EditOrder;
+use App\Models\Category;
 use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -176,6 +178,31 @@ class AdminPanelTest extends TestCase
         $inventory->refresh();
         $this->assertSame(25, $inventory->quantity);
         $this->assertSame(5, $inventory->low_stock_threshold);
+    }
+
+    public function test_admin_can_list_and_create_category(): void
+    {
+        $admin = $this->admin();
+        $category = Category::factory()->create(['name' => 'Tops Deportivos']);
+
+        $this->actingAs($admin)
+            ->get('/admin/categories')
+            ->assertOk()
+            ->assertSee('Tops Deportivos');
+
+        Livewire::actingAs($admin)
+            ->test(CreateCategory::class)
+            ->fillForm([
+                'name' => 'Conjuntos',
+                'slug' => 'conjuntos',
+                'gender' => 'mujer',
+                'position' => 0,
+                'is_active' => true,
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas('categories', ['slug' => 'conjuntos', 'name' => 'Conjuntos']);
     }
 
     public function test_customer_cannot_access_panel(): void

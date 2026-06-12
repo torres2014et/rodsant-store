@@ -92,7 +92,11 @@
       "Bash(php -l app/Filament/Resources/Inventory/InventoryResource.php)",
       "Bash(php -l app/Filament/Resources/Inventory/Tables/InventoryTable.php)",
       "Bash(php -l app/Filament/Resources/Inventory/Schemas/InventoryForm.php)",
-      "Bash(./vendor/bin/pint app/Filament/Resources/Inventory tests/Feature/AdminPanelTest.php)"
+      "Bash(./vendor/bin/pint app/Filament/Resources/Inventory tests/Feature/AdminPanelTest.php)",
+      "Bash(php -l app/Filament/Resources/Categories/CategoryResource.php)",
+      "Bash(php -l app/Filament/Resources/Categories/Schemas/CategoryForm.php)",
+      "Bash(php -l app/Filament/Resources/Categories/Tables/CategoriesTable.php)",
+      "Bash(./vendor/bin/pint app/Filament/Resources/Categories tests/Feature/AdminPanelTest.php)"
     ]
   },
   "hooks": {
