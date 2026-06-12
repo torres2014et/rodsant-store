@@ -80,7 +80,9 @@
       "Bash(echo \"ADMIN: $\\(curl -s -o /dev/null -w '%{http_code}' --max-time 30 https://rodsant-store-production.up.railway.app/admin\\)\")",
       "Bash(echo \"HTTP home: $\\(curl -s -o /dev/null -w '%{http_code}' --max-time 30 https://rodsant-store-production.up.railway.app/\\)\")",
       "Bash(C:/xampp/php/php.exe -r '$s=getimagesize\\(\"public/img/hero-storefront.jpg\"\\); echo \"Dimensiones: \".$s[0].\"x\".$s[1].\" px\".PHP_EOL;')",
-      "Bash(C:/xampp/php/php.exe *)"
+      "Bash(C:/xampp/php/php.exe *)",
+      "Bash(./vendor/bin/pint app/Filament/Widgets/SalesChart.php --quiet)",
+      "PowerShell(php artisan test --filter=AdminPanel 2>&1 | Select-Object -Last 20)"
     ]
   },
   "hooks": {
