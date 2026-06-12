@@ -77,7 +77,8 @@
       "PowerShell(php artisan key:generate --show)",
       "Bash(echo \"HOME : $\\(curl -s -o /dev/null -w '%{http_code}' --max-time 30 https://rodsant-store-production.up.railway.app/\\)\")",
       "Bash(echo \"/up  : $\\(curl -s -o /dev/null -w '%{http_code}' --max-time 30 https://rodsant-store-production.up.railway.app/up\\)\")",
-      "Bash(echo \"ADMIN: $\\(curl -s -o /dev/null -w '%{http_code}' --max-time 30 https://rodsant-store-production.up.railway.app/admin\\)\")"
+      "Bash(echo \"ADMIN: $\\(curl -s -o /dev/null -w '%{http_code}' --max-time 30 https://rodsant-store-production.up.railway.app/admin\\)\")",
+      "Bash(echo \"HTTP home: $\\(curl -s -o /dev/null -w '%{http_code}' --max-time 30 https://rodsant-store-production.up.railway.app/\\)\")"
     ]
   },
   "hooks": {
