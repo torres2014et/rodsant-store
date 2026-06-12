@@ -4,7 +4,7 @@ Guía para trabajar en este repositorio. Léela al iniciar cada sesión.
 
 ## Qué es
 
-E-commerce de **RodSant Store**, marca de **ropa deportiva premium / sportswear** (estética monocromática B&N, minimalista, tono de rendimiento/movimiento; tipografía Archivo + Inter). Inspirado en la UX de DMaria Store. El checkout se cierra **por WhatsApp** (crea un pedido real en BD y genera un mensaje a `wa.me`); la pasarela de pago en línea queda para una fase posterior.
+E-commerce de **RodSant Store**, marca de **ropa deportiva premium para mujer** (sportswear). El **sitio** tiene estética monocromática B&N minimalista (tipografía Archivo + Inter), pero **las prendas pueden tener color** — el copy NO debe decir que la ropa es solo blanco y negro. Tono de rendimiento/movimiento, dirigido a la mujer activa. Inspirado en la UX de DMaria Store. El checkout se cierra **por WhatsApp** (crea un pedido real en BD y genera un mensaje a `wa.me`); la pasarela de pago en línea queda para una fase posterior.
 
 **Restricción #1 (obligatoria):** la propietaria NO es técnica. El panel admin debe permitir gestionar TODA la tienda sin tocar código, en español, con lenguaje humano (sin jerga), validaciones amables y publicación automática al guardar. NO generar descripciones con IA por ahora.
 
@@ -61,21 +61,30 @@ php artisan make:filament-relation-manager Recurso relacion atributoTitulo
 ## Estado del proyecto
 
 **Hecho:**
-- Capa de datos completa: 23 migraciones, 20 modelos + relaciones, factories, seeders (roles, admin, atributos talla/color, categorías, settings, zonas de envío, 24 productos demo).
+- Capa de datos completa: migraciones, 20 modelos + relaciones, factories.
 - Roles/permisos granulares (Spatie) + policies + gates.
-- Filament v4: panel configurado + **Dashboard** (widgets `StatsOverview`, `LatestOrders`, `TopProducts`) + **Productos** (`ProductResource` con form slug-auto, imágenes reordenables con principal, SEO; `VariantsRelationManager` talla/color/SKU/stock).
+- **Panel Filament v4:** Dashboard (widgets `StatsOverview`, `LatestOrders`, `TopProducts`) + **Productos** (`ProductResource`, form slug-auto, imágenes reordenables, SEO, `VariantsRelationManager`) + **Configuración** (`app/Filament/Pages/StoreSettings.php`, gated `settings.manage`: número WhatsApp, contacto, redes).
+- **Storefront público COMPLETO:** Home; **Catálogo con filtros Livewire** (`/tienda`, `/novedades`, `/ofertas`, `/categoria/{slug}`, `/coleccion/{slug}` → componente `App\Livewire\Storefront\Catalog` + `CatalogService`); **Ficha de producto (PDP)** (`/producto/{slug}` → `ProductController` + `App\Livewire\Storefront\ProductDetail`, galería + variantes + relacionados + JSON-LD); carrito (Livewire); checkout + cierre por WhatsApp; **selector de moneda COP/USD/EUR con banderas SVG** (`components/storefront/flag.blade.php`); **botón flotante de WhatsApp** (`App\Support\Whatsapp` + `whatsapp-float`).
+- **Datos demo** vía `database/seeders/DemoSeeder.php` (único que llama `DatabaseSeeder`): 4 categorías (Camisetas Oversize, Hoodies, Cargos, Accesorios), 22 productos con **imágenes placeholder SVG de marca** generadas por el seeder, variantes talla×color, inventario realista (agotados + stock bajo), 3 colecciones, 3 banners (Hero inactivo a propósito → Home usa la fachada `public/img/hero-storefront.jpg`), 14 clientes + 14 pedidos en los 6 estados.
+- **Listo para desplegar** en Railway: `Dockerfile` (nginx + php-fpm), `railway.json`, trust proxies en `bootstrap/app.php`, guía `DEPLOY-RAILWAY.md`.
+- **36 tests passing** (Home, Catalog/PDP, CheckoutFlow, CurrencySwitcher, AdminPanel, StoreSettings).
 
-**Pendiente (módulos del panel):** Inventario · Categorías · Pedidos (cambio de estados) · Clientes · Banners · Configuración · Usuarios.
+**Pendiente (módulos del panel):** Inventario · Categorías · Pedidos (cambio de estados) · Clientes · Banners · Usuarios. (Configuración: solo WhatsApp/contacto/redes; falta el resto de ajustes.)
 
-**Más adelante (fuera del panel):** frontend público (Home, catálogo, PDP), carrito (Livewire), checkout + flujo WhatsApp, pasarela de pago en línea, búsqueda (Meilisearch), SEO técnico.
+**Pendiente (storefront):** listado de colecciones (`/colecciones` sigue siendo placeholder "Próximamente"), cuenta, favoritos. Rutas placeholder restantes (`ComingSoonController`): `collections.index`, `account.index`, `wishlist.index`, `page.show`.
+
+**Más adelante:** pasarela de pago en línea (Wompi/PayU), búsqueda (Meilisearch), SEO técnico avanzado, optimización de imágenes (placeholders SVG → fotos reales).
 
 ## Documentos de referencia
 
 - `docs/ARQUITECTURA.md` — documento técnico de arquitectura aprobado (10 secciones).
+- `DEPLOY-RAILWAY.md` — guía paso a paso para publicar la tienda en Railway (Dockerfile + MySQL + variables + volumen).
 
 ## Reglas de trabajo
 
-- No generar frontend público, carrito ni flujo WhatsApp hasta que se complete y apruebe el panel admin.
 - Construir **módulo por módulo** y **verificar** (tests o smoke test) antes de dar por terminado.
 - Correr **Pint** sobre los archivos tocados antes de cerrar.
 - No introducir sintaxis exclusiva de PHP 8.3/8.4 (el runtime es 8.2).
+- El copy de la tienda se dirige a la **mujer**; NO afirmar que la ropa es solo blanco y negro (la estética del sitio sí es B&N, las prendas no).
+- Imágenes de producto demo = **placeholders SVG** generados por `DemoSeeder`; reemplazar por fotos reales antes de producción.
+- Antes de tocar Filament v4, calcar la API de los recursos/páginas existentes (`ProductForm`, `StoreSettings`): `Filament\Schemas\Schema`, `$this->form` + `statePath('data')` en páginas.

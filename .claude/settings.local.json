@@ -65,7 +65,10 @@
       "Bash(grep -nE '\\\\\\\\\\\\$view|protected.*view|function getView' vendor/filament/filament/src/Pages/BasePage.php vendor/filament/filament/src/Pages/Page.php vendor/filament/support/src/Concerns/CanRenderInteractiveBlade*)",
       "Bash(./vendor/bin/pint app/Support/Whatsapp.php app/Filament/Pages/StoreSettings.php app/Livewire/Storefront/Catalog.php config/rodsant.php tests/Feature/StoreSettingsTest.php)",
       "Bash(npm -v)",
-      "Bash(./vendor/bin/pint bootstrap/app.php)"
+      "Bash(./vendor/bin/pint bootstrap/app.php)",
+      "Bash(git config *)",
+      "Bash(git commit -q -m ' *)",
+      "Bash(git branch *)"
     ]
   }
 }
