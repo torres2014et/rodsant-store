@@ -21,12 +21,22 @@
             : asset('img/hero-storefront.jpg');
     @endphp
     <section class="bg-noir text-bone">
-        {{-- Foto arriba: completa, en alta calidad, sin recortar --}}
-        <div class="bg-noir">
+        {{-- Foto arriba: completa y nítida, con relleno difuminado en los lados (se nota en PC) --}}
+        <div class="relative overflow-hidden bg-noir">
+            {{-- Fondo: misma foto, ampliada, difuminada y oscurecida — rellena los lados --}}
+            <img
+                src="{{ $heroImg }}"
+                alt=""
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl"
+            >
+            <div class="absolute inset-0 bg-noir/40"></div>
+
+            {{-- Foto nítida, completa, centrada --}}
             <img
                 src="{{ $heroImg }}"
                 alt="{{ $hero?->title ?? 'Fachada del local de RodSant Store' }}"
-                class="mx-auto block max-h-[80vh] w-auto max-w-full"
+                class="relative mx-auto block max-h-[80vh] w-auto max-w-full"
                 fetchpriority="high"
             >
         </div>
