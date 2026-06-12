@@ -23,9 +23,9 @@
     <section class="bg-noir text-bone">
         {{-- Foto arriba: completa y nítida, con relleno difuminado en los lados (se nota en PC) --}}
         <div class="relative overflow-hidden bg-noir">
-            {{-- Fondo: misma foto, ampliada, difuminada y oscurecida — rellena los lados --}}
+            {{-- Fondo: logo de la marca, ampliado, difuminado y oscurecido — rellena los lados --}}
             <img
-                src="{{ $heroImg }}"
+                src="{{ asset('img/rodsant-logo.jpg') }}"
                 alt=""
                 aria-hidden="true"
                 class="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-xl"
