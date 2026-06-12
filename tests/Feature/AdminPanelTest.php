@@ -6,6 +6,7 @@ namespace Tests\Feature;
 
 use App\Enums\OrderStatus;
 use App\Enums\UserRole;
+use App\Filament\Resources\Inventory\Pages\EditInventory;
 use App\Filament\Resources\Orders\Pages\EditOrder;
 use App\Models\Inventory;
 use App\Models\Order;
@@ -131,6 +132,50 @@ class AdminPanelTest extends TestCase
 
         $this->assertSame(OrderStatus::Shipped, $order->refresh()->status);
         $this->assertSame('paid', $order->payment_status->value);
+    }
+
+    public function test_admin_can_list_inventory(): void
+    {
+        $admin = $this->admin();
+        $product = Product::factory()->create(['name' => 'Leggings Flow']);
+        $variant = ProductVariant::factory()->create(['product_id' => $product->id]);
+        Inventory::factory()->create([
+            'product_variant_id' => $variant->id,
+            'quantity' => 2,
+            'reserved' => 0,
+            'low_stock_threshold' => 3,
+        ]);
+
+        $this->actingAs($admin)
+            ->get('/admin/inventory')
+            ->assertOk()
+            ->assertSee('Leggings Flow');
+    }
+
+    public function test_admin_can_adjust_stock(): void
+    {
+        $admin = $this->admin();
+        $product = Product::factory()->create();
+        $variant = ProductVariant::factory()->create(['product_id' => $product->id]);
+        $inventory = Inventory::factory()->create([
+            'product_variant_id' => $variant->id,
+            'quantity' => 2,
+            'reserved' => 0,
+            'low_stock_threshold' => 3,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(EditInventory::class, ['record' => $inventory->id])
+            ->fillForm([
+                'quantity' => 25,
+                'low_stock_threshold' => 5,
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $inventory->refresh();
+        $this->assertSame(25, $inventory->quantity);
+        $this->assertSame(5, $inventory->low_stock_threshold);
     }
 
     public function test_customer_cannot_access_panel(): void
