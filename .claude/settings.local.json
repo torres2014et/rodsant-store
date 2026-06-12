@@ -72,7 +72,9 @@
       "Skill(update-config)",
       "Bash(git check-ignore *)",
       "Bash(echo \"exit: $?\")",
-      "PowerShell($c = Get-Content .claude/settings.local.json -Raw | ConvertFrom-Json; $cmd = $c.hooks.Stop[0].hooks[0].command; if \\($cmd\\) { \"JSON OK - hook command:\"; $cmd } else { \"ERROR: hook no encontrado\" })"
+      "PowerShell($c = Get-Content .claude/settings.local.json -Raw | ConvertFrom-Json; $cmd = $c.hooks.Stop[0].hooks[0].command; if \\($cmd\\) { \"JSON OK - hook command:\"; $cmd } else { \"ERROR: hook no encontrado\" })",
+      "Bash(curl *)",
+      "PowerShell(php artisan key:generate --show)"
     ]
   },
   "hooks": {
