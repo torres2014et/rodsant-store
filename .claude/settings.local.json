@@ -83,7 +83,12 @@
       "Bash(C:/xampp/php/php.exe *)",
       "Bash(./vendor/bin/pint app/Filament/Widgets/SalesChart.php --quiet)",
       "PowerShell(php artisan test --filter=AdminPanel 2>&1 | Select-Object -Last 20)",
-      "PowerShell(php artisan test --filter=HomePageTest 2>&1 | Select-Object -Last 12)"
+      "PowerShell(php artisan test --filter=HomePageTest 2>&1 | Select-Object -Last 12)",
+      "Bash(php -l app/Filament/Resources/Orders/OrderResource.php)",
+      "Bash(php -l app/Filament/Resources/Orders/Tables/OrdersTable.php)",
+      "Bash(php -l app/Filament/Resources/Orders/Schemas/OrderForm.php)",
+      "Bash(php -l app/Filament/Resources/Orders/Pages/EditOrder.php)",
+      "Bash(./vendor/bin/pint app/Filament/Resources/Orders tests/Feature/AdminPanelTest.php)"
     ]
   },
   "hooks": {
