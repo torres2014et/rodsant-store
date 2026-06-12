@@ -91,10 +91,20 @@
     @stack('head')
 </head>
 <body class="min-h-screen bg-bone text-noir antialiased selection:bg-noir selection:text-bone">
-    {{-- Marca de agua: monograma RS fijo y difuminado detrás de toda la página --}}
+    {{-- Filtro que recorta el logo: deja SOLO las letras (luminancia → transparencia) y las tiñe de gris --}}
+    <svg width="0" height="0" class="absolute" aria-hidden="true">
+        <filter id="logo-solo-letras" color-interpolation-filters="sRGB">
+            <feColorMatrix type="luminanceToAlpha" result="lum" />
+            <feFlood flood-color="#8a8a8a" result="tinte" />
+            <feComposite in="tinte" in2="lum" operator="in" />
+        </filter>
+    </svg>
+
+    {{-- Marca de agua: SOLO las letras del logo, fijas y difuminadas detrás de toda la página --}}
     <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 flex items-center justify-center overflow-hidden">
         <img src="{{ asset('img/rodsant-logo.jpg') }}" alt=""
-             class="w-[78vw] max-w-3xl opacity-30 blur-[2px]">
+             class="w-[78vw] max-w-3xl opacity-40"
+             style="filter: url(#logo-solo-letras) blur(2px);">
     </div>
 
     {{-- Accesibilidad: salto al contenido --}}
