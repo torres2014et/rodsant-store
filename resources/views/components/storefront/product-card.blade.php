@@ -36,9 +36,9 @@
     $url = route('product.show', $product->slug);
 @endphp
 
-<article class="group relative flex flex-col">
+<article class="group relative flex flex-col transition-transform duration-500 hover:-translate-y-1.5" style="transition-timing-function: var(--ease-luxury);">
     {{-- Imagen --}}
-    <a href="{{ $url }}" class="relative block aspect-[3/4] overflow-hidden bg-mist" aria-label="{{ $product->name }}">
+    <a href="{{ $url }}" class="relative block aspect-[3/4] overflow-hidden bg-mist transition-shadow duration-500 group-hover:shadow-[0_30px_60px_-30px_rgba(10,10,10,0.45)]" aria-label="{{ $product->name }}">
         @if ($primaryUrl)
             <img
                 src="{{ $primaryUrl }}"

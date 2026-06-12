@@ -32,7 +32,11 @@
         style="transition-timing-function: var(--ease-luxury);"
     >
         <div class="container-editorial">
-            <div class="grid h-16 grid-cols-[1fr_auto_1fr] items-center lg:h-20">
+            <div
+                class="grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-500"
+                :class="scrolled ? 'h-14 lg:h-16' : 'h-16 lg:h-20'"
+                style="transition-timing-function: var(--ease-luxury);"
+            >
 
                 {{-- Izquierda: navegación (desktop) / hamburguesa (móvil) --}}
                 <div class="flex items-center">

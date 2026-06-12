@@ -82,7 +82,8 @@
       "Bash(C:/xampp/php/php.exe -r '$s=getimagesize\\(\"public/img/hero-storefront.jpg\"\\); echo \"Dimensiones: \".$s[0].\"x\".$s[1].\" px\".PHP_EOL;')",
       "Bash(C:/xampp/php/php.exe *)",
       "Bash(./vendor/bin/pint app/Filament/Widgets/SalesChart.php --quiet)",
-      "PowerShell(php artisan test --filter=AdminPanel 2>&1 | Select-Object -Last 20)"
+      "PowerShell(php artisan test --filter=AdminPanel 2>&1 | Select-Object -Last 20)",
+      "PowerShell(php artisan test --filter=HomePageTest 2>&1 | Select-Object -Last 12)"
     ]
   },
   "hooks": {

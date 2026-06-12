@@ -8,28 +8,40 @@
  * cuando entran en el viewport. Respeta `prefers-reduced-motion`.
  */
 function initReveal() {
-    const elements = document.querySelectorAll('.reveal');
-    if (elements.length === 0) return;
+    const simple = document.querySelectorAll('.reveal');
+    const groups = document.querySelectorAll('[data-reveal-group]');
+    if (simple.length === 0 && groups.length === 0) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion || !('IntersectionObserver' in window)) {
-        elements.forEach((el) => el.classList.add('is-visible'));
+        simple.forEach((el) => el.classList.add('is-visible'));
+        groups.forEach((g) => Array.from(g.children).forEach((c) => c.classList.add('is-visible')));
         return;
     }
 
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+
+                if (el.hasAttribute('data-reveal-group')) {
+                    // Cascada: cada hijo aparece con un pequeño retardo incremental.
+                    Array.from(el.children).forEach((child, i) => {
+                        setTimeout(() => child.classList.add('is-visible'), i * 90);
+                    });
+                } else {
+                    el.classList.add('is-visible');
                 }
+
+                observer.unobserve(el);
             });
         },
         { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
     );
 
-    elements.forEach((el) => observer.observe(el));
+    simple.forEach((el) => observer.observe(el));
+    groups.forEach((el) => observer.observe(el));
 }
 
 document.addEventListener('DOMContentLoaded', initReveal);

@@ -141,6 +141,63 @@
         transform: translateY(0);
     }
 
+    /* Entrada del hero al cargar la página (escalonada vía animation-delay) */
+    @keyframes hero-rise {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes hero-photo-in {
+        from {
+            opacity: 0;
+            transform: scale(1.05);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    .hero-rise {
+        opacity: 0;
+        animation: hero-rise 1s var(--ease-luxury) both;
+    }
+    .hero-photo-in {
+        opacity: 0;
+        animation: hero-photo-in 1.3s var(--ease-luxury) both;
+    }
+
+    /* Aparición escalonada (cascada) de los hijos al entrar en viewport.
+       El retardo por hijo lo aplica el JS (storefront.js). */
+    [data-reveal-group] > * {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+            opacity 0.8s var(--ease-luxury),
+            transform 0.8s var(--ease-luxury);
+    }
+    [data-reveal-group] > *.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-rise,
+        .hero-photo-in {
+            animation: none;
+            opacity: 1;
+        }
+        [data-reveal-group] > * {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+    }
+
     /* Marquee infinito para announcement bar / tickers */
     @keyframes marquee {
         from {

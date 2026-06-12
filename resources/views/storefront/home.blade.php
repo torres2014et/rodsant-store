@@ -34,20 +34,20 @@
         <div class="container-editorial relative grid items-center gap-10 py-16 lg:grid-cols-2 lg:gap-14 lg:py-24">
             {{-- Texto --}}
             <div class="order-2 max-w-xl lg:order-1">
-                <p class="eyebrow text-bone/60">{{ $hero?->subtitle ?? config('rodsant.brand.tagline') }}</p>
+                <p class="hero-rise eyebrow text-bone/60" style="animation-delay: 0.05s">{{ $hero?->subtitle ?? config('rodsant.brand.tagline') }}</p>
 
-                <h1 class="mt-6 font-display text-5xl font-extrabold uppercase leading-[0.92] tracking-tight text-bone sm:text-7xl lg:text-[5rem]">
+                <h1 class="hero-rise mt-6 font-display text-5xl font-extrabold uppercase leading-[0.92] tracking-tight text-bone sm:text-7xl lg:text-[5rem]" style="animation-delay: 0.18s">
                     {!! $hero?->title
                         ? e($hero->title)
                         : 'Muévete<br>sin límites' !!}
                 </h1>
 
-                <p class="mt-8 max-w-md text-lg font-light leading-relaxed text-bone/70">
+                <p class="hero-rise mt-8 max-w-md text-lg font-light leading-relaxed text-bone/70" style="animation-delay: 0.32s">
                     Ropa deportiva diseñada para la mujer activa: del entrenamiento al día a día.
                     Comodidad, soporte y libertad de movimiento en cada prenda.
                 </p>
 
-                <div class="mt-12 flex flex-wrap items-center gap-4">
+                <div class="hero-rise mt-12 flex flex-wrap items-center gap-4" style="animation-delay: 0.46s">
                     <a href="{{ $hero?->link_url ?? route('catalog.index') }}" class="btn-bone">
                         {{ $hero?->cta_label ?? 'Explorar la tienda' }}
                     </a>
@@ -63,7 +63,8 @@
                 <img
                     src="{{ $heroImg }}"
                     alt="{{ $hero?->title ?? 'Fachada del local de RodSant Store' }}"
-                    class="mx-auto block max-h-[78vh] w-auto max-w-full shadow-2xl lg:ml-auto lg:mr-0"
+                    class="hero-photo-in mx-auto block max-h-[78vh] w-auto max-w-full shadow-2xl lg:ml-auto lg:mr-0"
+                    style="animation-delay: 0.15s"
                     fetchpriority="high"
                 >
             </div>
@@ -83,7 +84,7 @@
                     link-label="Ver todas"
                 />
 
-                <div class="reveal mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:mt-14 lg:grid-cols-3 lg:gap-8">
+                <div class="mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:mt-14 lg:grid-cols-3 lg:gap-8" data-reveal-group>
                     @foreach ($featuredCategories as $category)
                         @php $catImg = $resolveImg($category->image); @endphp
                         <a href="{{ route('category.show', $category->slug) }}"
@@ -177,7 +178,7 @@
                     :href="route('collections.index')"
                 />
 
-                <div class="reveal mt-10 grid gap-6 lg:mt-14 lg:grid-cols-3 lg:gap-8">
+                <div class="mt-10 grid gap-6 lg:mt-14 lg:grid-cols-3 lg:gap-8" data-reveal-group>
                     @foreach ($collections as $collection)
                         @php $colImg = $resolveImg($collection->cover_image); @endphp
                         <a href="{{ route('collection.show', $collection->slug) }}"
@@ -234,7 +235,7 @@
                 link-label="Seguir"
             />
 
-            <div class="reveal mt-10 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:mt-14 lg:grid-cols-6 lg:gap-3">
+            <div class="mt-10 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:mt-14 lg:grid-cols-6 lg:gap-3" data-reveal-group>
                 @for ($i = 0; $i < 6; $i++)
                     <a href="{{ $instagram ?? 'https://instagram.com/' . $instagramHandle }}" target="_blank" rel="noopener"
                        class="group relative block aspect-square overflow-hidden bg-noir">
