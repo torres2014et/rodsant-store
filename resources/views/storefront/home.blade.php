@@ -15,25 +15,24 @@
     description="RodSant Store — ropa deportiva premium para mujer. Tops, leggings, conjuntos y outerwear técnicos diseñados para entrenar y moverte."
 >
     {{-- ============================ HERO ============================ --}}
-    <section class="relative overflow-hidden bg-noir text-bone">
-        @if ($hero && ($heroImg = $resolveImg($hero->image_desktop)))
-            <img src="{{ $heroImg }}" alt="{{ $hero->title }}"
-                 class="absolute inset-0 h-full w-full object-cover opacity-70" fetchpriority="high">
-            <div class="absolute inset-0 bg-gradient-to-t from-noir/80 via-noir/30 to-noir/40"></div>
-        @else
-            {{-- Fondo: fachada del local RodSant (B&N) --}}
+    @php
+        $heroImg = ($hero && ($img = $resolveImg($hero->image_desktop)))
+            ? $img
+            : asset('img/hero-storefront.jpg');
+    @endphp
+    <section class="bg-noir text-bone">
+        {{-- Foto arriba: completa, en alta calidad, sin recortar --}}
+        <div class="bg-noir">
             <img
-                src="{{ asset('img/hero-storefront.jpg') }}"
-                alt="Fachada del local de RodSant Store"
-                class="absolute inset-0 h-full w-full object-contain object-top"
+                src="{{ $heroImg }}"
+                alt="{{ $hero?->title ?? 'Fachada del local de RodSant Store' }}"
+                class="mx-auto block max-h-[80vh] w-auto max-w-full"
                 fetchpriority="high"
             >
-            {{-- Velos para legibilidad del texto --}}
-            <div class="absolute inset-0 bg-noir/45"></div>
-            <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-noir via-noir/70 to-transparent"></div>
-        @endif
+        </div>
 
-        <div class="container-editorial relative flex min-h-[86vh] flex-col justify-end pb-20 pt-32 lg:min-h-[92vh] lg:pb-24">
+        {{-- Bloque de texto debajo --}}
+        <div class="container-editorial py-16 lg:py-20">
             <div class="max-w-2xl">
                 <p class="eyebrow text-bone/60">{{ $hero?->subtitle ?? config('rodsant.brand.tagline') }}</p>
 
