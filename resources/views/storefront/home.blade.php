@@ -28,7 +28,7 @@
                 src="{{ $heroImg }}"
                 alt=""
                 aria-hidden="true"
-                class="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl"
+                class="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-xl"
             >
             <div class="absolute inset-0 bg-noir/40"></div>
 
