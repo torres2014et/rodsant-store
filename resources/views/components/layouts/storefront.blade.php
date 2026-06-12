@@ -91,6 +91,12 @@
     @stack('head')
 </head>
 <body class="min-h-screen bg-bone text-noir antialiased selection:bg-noir selection:text-bone">
+    {{-- Marca de agua: monograma RS fijo y difuminado detrás de toda la página --}}
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 flex items-center justify-center overflow-hidden">
+        <img src="{{ asset('img/rs-watermark.svg') }}" alt=""
+             class="w-[78vw] max-w-3xl opacity-30 blur-[2px]">
+    </div>
+
     {{-- Accesibilidad: salto al contenido --}}
     <a href="#contenido"
        class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:bg-noir focus:px-4 focus:py-2 focus:text-bone">

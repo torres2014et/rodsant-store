@@ -73,7 +73,7 @@
 
     {{-- ===================== CATEGORÍAS DESTACADAS ===================== --}}
     @if ($featuredCategories->isNotEmpty())
-        <section class="bg-bone py-16 lg:py-24">
+        <section class="bg-bone/85 py-16 lg:py-24">
             <div class="container-editorial">
                 <x-storefront.section-header
                     class="reveal"
@@ -168,7 +168,7 @@
 
     {{-- ===================== COLECCIONES ===================== --}}
     @if ($collections->isNotEmpty())
-        <section class="bg-bone py-16 lg:py-24">
+        <section class="bg-bone/85 py-16 lg:py-24">
             <div class="container-editorial">
                 <x-storefront.section-header
                     class="reveal"
@@ -222,7 +222,7 @@
     />
 
     {{-- ===================== INSTAGRAM FEED ===================== --}}
-    <section class="bg-bone py-16 lg:py-24">
+    <section class="bg-bone/85 py-16 lg:py-24">
         <div class="container-editorial">
             <x-storefront.section-header
                 class="reveal"

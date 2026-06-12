@@ -17,7 +17,7 @@
     ];
 @endphp
 
-<footer class="bg-noir text-bone">
+<footer class="bg-noir/90 text-bone">
     <div class="container-editorial py-16 lg:py-24">
         <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
 
