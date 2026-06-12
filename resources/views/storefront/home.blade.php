@@ -25,7 +25,7 @@
             <img
                 src="{{ asset('img/hero-storefront.jpg') }}"
                 alt="Fachada del local de RodSant Store"
-                class="absolute inset-0 h-full w-full object-cover object-center lg:object-contain lg:object-right"
+                class="absolute inset-0 h-full w-full object-contain object-top"
                 fetchpriority="high"
             >
             {{-- Velos para legibilidad del texto --}}
