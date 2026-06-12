@@ -18,9 +18,20 @@ RUN npm run build
 
 ############################################################
 # Etapa 2 — Runtime PHP de producción (nginx + php-fpm)
-# Imagen preparada para Laravel: trae intl, zip, gd, pdo_mysql, etc.
+# Base: serversideup/php (trae zip, gd, pdo_mysql, opcache, etc.)
+# OJO: NO trae ext-intl por defecto → se instala abajo (Filament lo exige).
 ############################################################
 FROM serversideup/php:8.2-fpm-nginx AS app
+
+# --- Extensiones PHP adicionales -------------------------------------------
+# Filament 4 (filament/support, forms, tables, panels, query-builder) requiere
+# ext-intl. La imagen base NO la incluye. Usamos install-php-extensions (viene
+# embebido en serversideup/php), que compila intl e instala las librerías ICU
+# necesarias automáticamente. Requiere usuario root; al terminar volvemos a
+# www-data (usuario no privilegiado con el que corre la app).
+USER root
+RUN install-php-extensions intl
+USER www-data
 
 # En cada arranque: corre migraciones y crea el enlace de storage.
 # (La carga de datos demo se hace UNA vez, a mano — ver DEPLOY-RAILWAY.md.)
@@ -41,6 +52,8 @@ COPY --chown=www-data:www-data . .
 COPY --chown=www-data:www-data --from=assets /app/public/build ./public/build
 
 # Dependencias PHP de producción (sin paquetes de desarrollo).
+# Ya con ext-intl presente, Composer valida los requisitos de plataforma sin
+# necesidad de --ignore-platform-req.
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist \
     && composer clear-cache
 
