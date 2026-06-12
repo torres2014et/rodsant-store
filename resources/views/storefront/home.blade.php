@@ -20,33 +20,23 @@
             ? $img
             : asset('img/hero-storefront.jpg');
     @endphp
-    <section class="bg-noir text-bone">
-        {{-- Foto arriba: completa y nítida, con relleno difuminado en los lados (se nota en PC) --}}
-        <div class="relative overflow-hidden bg-noir">
-            {{-- Fondo: logo de la marca, ampliado, difuminado y oscurecido — rellena los lados --}}
-            <img
-                src="{{ asset('img/rodsant-logo.jpg') }}"
-                alt=""
-                aria-hidden="true"
-                class="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-xl"
-            >
-            <div class="absolute inset-0 bg-noir/40"></div>
+    <section class="relative overflow-hidden bg-noir text-bone">
+        {{-- Fondo: la misma foto, ampliada y muy difuminada --}}
+        <img
+            src="{{ $heroImg }}"
+            alt=""
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-3xl"
+        >
+        <div class="absolute inset-0 bg-noir/55"></div>
 
-            {{-- Foto nítida, completa, centrada --}}
-            <img
-                src="{{ $heroImg }}"
-                alt="{{ $hero?->title ?? 'Fachada del local de RodSant Store' }}"
-                class="relative mx-auto block max-h-[80vh] w-auto max-w-full"
-                fetchpriority="high"
-            >
-        </div>
-
-        {{-- Bloque de texto debajo --}}
-        <div class="container-editorial py-16 lg:py-20">
-            <div class="max-w-2xl">
+        {{-- Contenido: texto a un lado, foto al lado (en celular se apila: foto arriba, texto abajo) --}}
+        <div class="container-editorial relative grid items-center gap-10 py-16 lg:grid-cols-2 lg:gap-14 lg:py-24">
+            {{-- Texto --}}
+            <div class="order-2 max-w-xl lg:order-1">
                 <p class="eyebrow text-bone/60">{{ $hero?->subtitle ?? config('rodsant.brand.tagline') }}</p>
 
-                <h1 class="mt-6 font-display text-5xl font-extrabold uppercase leading-[0.92] tracking-tight text-bone sm:text-7xl lg:text-[5.25rem]">
+                <h1 class="mt-6 font-display text-5xl font-extrabold uppercase leading-[0.92] tracking-tight text-bone sm:text-7xl lg:text-[5rem]">
                     {!! $hero?->title
                         ? e($hero->title)
                         : 'Muévete<br>sin límites' !!}
@@ -66,6 +56,16 @@
                         Ver novedades
                     </a>
                 </div>
+            </div>
+
+            {{-- Foto nítida al lado --}}
+            <div class="order-1 lg:order-2">
+                <img
+                    src="{{ $heroImg }}"
+                    alt="{{ $hero?->title ?? 'Fachada del local de RodSant Store' }}"
+                    class="mx-auto block max-h-[78vh] w-auto max-w-full shadow-2xl lg:ml-auto lg:mr-0"
+                    fetchpriority="high"
+                >
             </div>
         </div>
 
